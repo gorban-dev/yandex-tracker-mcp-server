@@ -31,6 +31,14 @@ claude mcp add yandex-tracker \
 npm install -g @gor-dev/yandex-tracker-mcp
 ```
 
+### Install Claude Skill (optional)
+
+Gives Claude workflow knowledge (sprint planning, best practices, query patterns):
+
+```bash
+npx -y @gor-dev/yandex-tracker-mcp --install-skill
+```
+
 ### Manual (from source)
 
 ```bash
@@ -227,9 +235,20 @@ npm run inspector
 
 ```
 src/
-├── index.ts      # MCP server, tool handlers, formatters
-├── client.ts     # Yandex Tracker API client
-└── schemas.ts    # Zod validation schemas
+├── index.ts              # McpServer initialization and startup
+├── constants.ts          # API URL, CHARACTER_LIMIT, version
+├── types.ts              # TypeScript interfaces for API responses
+├── formatters.ts         # Markdown formatters for all entities
+├── schemas/
+│   └── index.ts          # Zod validation schemas (.strict())
+├── services/
+│   └── tracker-client.ts # Yandex Tracker API client
+└── tools/
+    ├── issues.ts         # get_issue, create_issue, update_issue, search_issues
+    ├── worklogs.ts       # add_worklog, get_worklogs
+    ├── comments.ts       # get_comments, add_comment
+    ├── transitions.ts    # get_transitions, transition_issue
+    └── links.ts          # get_issue_links, link_issues
 ```
 
 ## Development

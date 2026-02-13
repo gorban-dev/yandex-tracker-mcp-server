@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-02-13
+
+### Added
+- **7 new tools** (5 → 12 total):
+  - `yandex_tracker_create_issue` — create new issues with full field support (type, priority, assignee, parent, followers, tags, sprint)
+  - `yandex_tracker_get_comments` — get all comments for an issue
+  - `yandex_tracker_add_comment` — add comments with user mentions (summonees)
+  - `yandex_tracker_get_transitions` — list available status transitions
+  - `yandex_tracker_transition_issue` — execute workflow transitions with optional comment
+  - `yandex_tracker_get_issue_links` — get all links for an issue
+  - `yandex_tracker_link_issues` — create links between issues (relates, depends on, subtask, duplicates, etc.)
+
+### Changed
+- Consolidated documentation: merged SETUP.md, CLAUDE_CLI_SETUP.md, EXAMPLES.md content into README.md
+- Removed 9 redundant files (test scripts, duplicate docs, install scripts)
+- Updated README with full tool catalog, query language reference, ISO 8601 guide, and config paths for all OS
+
 ## [1.0.1] - 2026-02-10
 
 ### Fixed
