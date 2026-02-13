@@ -1,0 +1,270 @@
+# Yandex Tracker MCP Server
+
+MCP (Model Context Protocol) server for integrating with Yandex Tracker API. Enables LLMs to manage issues, track time, handle comments, transitions, and links in Yandex Tracker.
+
+## Features
+
+- **Issue Management**: Create, read, and update issues
+- **Time Tracking**: Add and retrieve worklog entries
+- **Comments**: Read and add comments to issues
+- **Workflow Transitions**: View available transitions and change issue status
+- **Issue Links**: View and create links between issues
+- **Search**: Query issues using Yandex Tracker query language
+- **Dual Response Formats**: JSON (for processing) or Markdown (for readability)
+
+## Installation
+
+### Quick Install (npx — Recommended)
+
+No installation needed. Use directly with npx:
+
+```bash
+claude mcp add yandex-tracker \
+  -e YANDEX_TRACKER_TOKEN="your_token" \
+  -e YANDEX_TRACKER_CLOUD_ORG_ID="your_cloud_org_id" \
+  -- npx -y @gor-dev/yandex-tracker-mcp
+```
+
+### Global Install
+
+```bash
+npm install -g @gor-dev/yandex-tracker-mcp
+```
+
+### Manual (from source)
+
+```bash
+git clone https://github.com/gorban-dev/yandex-tracker-mcp-server.git
+cd yandex-tracker-mcp-server
+npm install
+npm run build
+```
+
+## Configuration
+
+### Environment Variables
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `YANDEX_TRACKER_TOKEN` | Yes* | OAuth token for authentication |
+| `YANDEX_TRACKER_ORG_ID` | Yes* | Organization ID (for OAuth) |
+| `YANDEX_TRACKER_IAM_TOKEN` | Yes* | IAM token (alternative to OAuth) |
+| `YANDEX_TRACKER_CLOUD_ORG_ID` | Yes* | Cloud Organization ID (for IAM or OAuth) |
+
+\*Either OAuth (`TOKEN` + `ORG_ID` or `CLOUD_ORG_ID`) or IAM (`IAM_TOKEN` + `CLOUD_ORG_ID`) pair is required.
+
+### Option 1: OAuth Token (Recommended)
+
+```bash
+export YANDEX_TRACKER_TOKEN="your_oauth_token"
+export YANDEX_TRACKER_CLOUD_ORG_ID="your_cloud_org_id"
+```
+
+Get your OAuth token from [Yandex OAuth](https://oauth.yandex.ru/). Find your Cloud Organization ID in [Yandex Cloud Console](https://console.cloud.yandex.ru/).
+
+### Option 2: IAM Token (Yandex Cloud)
+
+```bash
+export YANDEX_TRACKER_IAM_TOKEN="your_iam_token"
+export YANDEX_TRACKER_CLOUD_ORG_ID="your_cloud_org_id"
+```
+
+> IAM tokens expire after 12 hours. Regenerate with `yc iam create-token`.
+
+### Claude Code (CLI) Integration
+
+**Using npx (recommended):**
+```bash
+claude mcp add yandex-tracker \
+  -e YANDEX_TRACKER_TOKEN="your_token" \
+  -e YANDEX_TRACKER_CLOUD_ORG_ID="your_cloud_org_id" \
+  -- npx -y @gor-dev/yandex-tracker-mcp
+```
+
+**Using local build:**
+```bash
+claude mcp add yandex-tracker \
+  -e YANDEX_TRACKER_TOKEN="your_token" \
+  -e YANDEX_TRACKER_CLOUD_ORG_ID="your_cloud_org_id" \
+  -- node /path/to/yandex-tracker-mcp-server/dist/index.js
+```
+
+**Manage:**
+```bash
+claude mcp list              # list all servers
+claude mcp get yandex-tracker  # show config
+claude mcp remove yandex-tracker # remove
+```
+
+### Project-specific `.mcp.json`
+
+Create `.mcp.json` in your project root:
+
+```json
+{
+  "mcpServers": {
+    "yandex-tracker": {
+      "command": "npx",
+      "args": ["-y", "@gor-dev/yandex-tracker-mcp"],
+      "env": {
+        "YANDEX_TRACKER_TOKEN": "your_token",
+        "YANDEX_TRACKER_CLOUD_ORG_ID": "your_cloud_org_id"
+      }
+    }
+  }
+}
+```
+
+### Claude Desktop
+
+Config file locations:
+- **macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
+- **Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
+- **Linux:** `~/.config/Claude/claude_desktop_config.json`
+
+```json
+{
+  "mcpServers": {
+    "yandex-tracker": {
+      "command": "npx",
+      "args": ["-y", "@gor-dev/yandex-tracker-mcp"],
+      "env": {
+        "YANDEX_TRACKER_TOKEN": "your_token",
+        "YANDEX_TRACKER_CLOUD_ORG_ID": "your_cloud_org_id"
+      }
+    }
+  }
+}
+```
+
+## Available Tools (12)
+
+### Issue Management
+
+| Tool | Description | Type |
+|------|-------------|------|
+| `yandex_tracker_get_issue` | Get issue details by key | Read |
+| `yandex_tracker_create_issue` | Create a new issue | Write |
+| `yandex_tracker_update_issue` | Update issue fields | Write |
+| `yandex_tracker_search_issues` | Search issues with query language | Read |
+
+### Time Tracking
+
+| Tool | Description | Type |
+|------|-------------|------|
+| `yandex_tracker_add_worklog` | Log time spent on an issue | Write |
+| `yandex_tracker_get_worklogs` | Get all worklogs for an issue | Read |
+
+### Comments
+
+| Tool | Description | Type |
+|------|-------------|------|
+| `yandex_tracker_get_comments` | Get all comments on an issue | Read |
+| `yandex_tracker_add_comment` | Add a comment to an issue | Write |
+
+### Workflow
+
+| Tool | Description | Type |
+|------|-------------|------|
+| `yandex_tracker_get_transitions` | Get available status transitions | Read |
+| `yandex_tracker_transition_issue` | Execute a status transition | Write |
+
+### Links
+
+| Tool | Description | Type |
+|------|-------------|------|
+| `yandex_tracker_get_issue_links` | Get all links for an issue | Read |
+| `yandex_tracker_link_issues` | Create a link between issues | Write |
+
+## Query Language
+
+Yandex Tracker supports a powerful query language for searching issues:
+
+```
+# Issues assigned to me
+Assignee: me()
+
+# Issues in specific queue
+Queue: PROJ
+
+# Combine conditions
+Queue: PROJ AND Status: open AND Assignee: me()
+
+# Date ranges
+Created: >= 2024-01-01 AND Created: <= 2024-01-31
+
+# Priority and type
+Priority: critical OR Priority: blocker
+Type: bug
+
+# Complex queries
+Queue: API AND (Type: bug OR Type: improvement) AND Status: !closed
+```
+
+## ISO 8601 Duration Reference
+
+Time values use ISO 8601 duration format:
+
+| Duration | Format | Notes |
+|----------|--------|-------|
+| 30 minutes | `PT30M` | |
+| 1 hour | `PT1H` | |
+| 2 hours 30 min | `PT2H30M` | |
+| 4 hours | `PT4H` | Half business day |
+| 8 hours | `PT8H` or `P1D` | Full business day |
+| 1 week | `P1W` or `P5D` | 5 business days = 40h |
+| 2 weeks | `P2W` or `P10D` | |
+
+> Yandex Tracker uses business days (8h) and business weeks (5d). `P1D` = 8 hours, `P1W` = 40 hours.
+
+## Testing
+
+```bash
+npm run inspector
+```
+
+## Architecture
+
+```
+src/
+├── index.ts      # MCP server, tool handlers, formatters
+├── client.ts     # Yandex Tracker API client
+└── schemas.ts    # Zod validation schemas
+```
+
+## Development
+
+```bash
+npm install       # install dependencies
+npm run build     # compile TypeScript
+npm run dev       # watch mode
+npm start         # start server
+npm run inspector # test with MCP Inspector
+```
+
+## Error Handling
+
+| Error | Cause | Fix |
+|-------|-------|-----|
+| 401 Unauthorized | Invalid/expired token | Check token, regenerate IAM |
+| 403 Forbidden | Wrong org ID or no access | Verify org ID type matches auth method |
+| 404 Not Found | Issue doesn't exist | Check issue key format (QUEUE-NUMBER) |
+| 429 Too Many Requests | Rate limit | Reduce request frequency |
+
+## Security
+
+- Never commit tokens to version control
+- Use environment variables for credentials
+- IAM tokens expire after 12 hours (prefer for temporary access)
+- All requests use HTTPS
+
+## License
+
+MIT
+
+## Links
+
+- **npm:** https://www.npmjs.com/package/@gor-dev/yandex-tracker-mcp
+- **GitHub:** https://github.com/gorban-dev/yandex-tracker-mcp-server
+- **Yandex Tracker API:** https://yandex.cloud/en/docs/tracker/
+- **MCP Specification:** https://modelcontextprotocol.io/

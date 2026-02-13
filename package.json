@@ -1,0 +1,54 @@
+{
+  "name": "@gor-dev/yandex-tracker-mcp",
+  "version": "1.0.1",
+  "description": "MCP server for Yandex Tracker API integration",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "yandex-tracker-mcp": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "start": "node dist/index.js",
+    "inspector": "npx @modelcontextprotocol/inspector dist/index.js",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "mcp",
+    "yandex-tracker",
+    "model-context-protocol",
+    "yandex",
+    "tracker",
+    "issue-tracking",
+    "project-management",
+    "claude",
+    "ai"
+  ],
+  "author": "Sergey Gorban",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gorban-dev/yandex-tracker-mcp-server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gorban-dev/yandex-tracker-mcp-server/issues"
+  },
+  "homepage": "https://github.com/gorban-dev/yandex-tracker-mcp-server#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.4",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "typescript": "^5.7.3"
+  }
+}
