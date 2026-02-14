@@ -9,11 +9,8 @@
   "plugins": [
     {
       "name": "yandex-tracker",
-      "source": {
-        "source": "git",
-        "url": "https://github.com/gorban-dev/yandex-tracker-mcp-server.git"
-      },
       "description": "Yandex Tracker MCP server for issue management, time tracking, comments, workflows, and sprint planning",
+      "source": ".",
       "version": "1.2.0"
     }
   ]
