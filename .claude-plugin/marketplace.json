@@ -1,0 +1,20 @@
+{
+  "name": "gor-dev-plugins",
+  "owner": {
+    "name": "Sergey Gorban",
+    "email": "gorban.dev@gmail.com"
+  },
+  "description": "Yandex Tracker integration and tools for Claude Code",
+  "homepage": "https://github.com/gorban-dev/yandex-tracker-mcp-server",
+  "plugins": [
+    {
+      "name": "yandex-tracker",
+      "source": {
+        "source": "github",
+        "repo": "gorban-dev/yandex-tracker-mcp-server"
+      },
+      "description": "Yandex Tracker MCP server for issue management, time tracking, comments, workflows, and sprint planning",
+      "version": "1.2.0"
+    }
+  ]
+}
