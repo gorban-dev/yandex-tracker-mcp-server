@@ -10,7 +10,7 @@
     {
       "name": "yandex-tracker",
       "description": "Yandex Tracker MCP server for issue management, time tracking, comments, workflows, and sprint planning",
-      "source": ".",
+      "source": "./",
       "version": "1.2.0"
     }
   ]
