@@ -130,6 +130,22 @@ export YANDEX_TRACKER_CLOUD_ORG_ID="your_cloud_org_id"
 
 Get your OAuth token from [Yandex OAuth](https://oauth.yandex.ru/). Find your Cloud Organization ID in [Yandex Cloud Console](https://console.cloud.yandex.ru/).
 
+**To make these variables permanent**, add them to your shell profile:
+
+```bash
+# For zsh (macOS default)
+echo 'export YANDEX_TRACKER_TOKEN="your_oauth_token"' >> ~/.zshrc
+echo 'export YANDEX_TRACKER_CLOUD_ORG_ID="your_cloud_org_id"' >> ~/.zshrc
+source ~/.zshrc
+
+# For bash
+echo 'export YANDEX_TRACKER_TOKEN="your_oauth_token"' >> ~/.bashrc
+echo 'export YANDEX_TRACKER_CLOUD_ORG_ID="your_cloud_org_id"' >> ~/.bashrc
+source ~/.bashrc
+```
+
+After adding to your profile, **restart Claude Code** to pick up the new environment variables.
+
 ### Option 2: IAM Token (Yandex Cloud)
 
 ```bash

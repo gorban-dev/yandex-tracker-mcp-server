@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.1] - 2026-02-14
+
+### Changed
+- Updated README with detailed instructions for setting permanent environment variables
+- Added shell profile configuration examples for zsh and bash
+- Added note about restarting Claude Code after setting environment variables
+
+## [1.2.0] - 2026-02-14
+
+### Added
+- Claude Code plugin support with auto-configuration
+- GitHub marketplace integration for easy plugin installation
+- Automatic skill installation on MCP server startup
+
 ## [1.1.0] - 2026-02-13
 
 ### Added
