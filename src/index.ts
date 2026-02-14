@@ -7,6 +7,13 @@ if (process.argv.includes("--install-skill")) {
   process.exit(0);
 }
 
+// Auto-install skill on server startup
+try {
+  installSkill(true);
+} catch {
+  // Ignore errors — skill install is non-critical
+}
+
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { YandexTrackerClient } from "./services/tracker-client.js";

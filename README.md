@@ -14,29 +14,32 @@ MCP (Model Context Protocol) server for integrating with Yandex Tracker API. Ena
 
 ## Installation
 
-### Quick Install (npx — Recommended)
+### Claude Code — Global (Recommended)
 
-No installation needed. Use directly with npx:
+Adds the server for all your projects:
 
 ```bash
-claude mcp add yandex-tracker \
-  -e YANDEX_TRACKER_TOKEN="your_token" \
-  -e YANDEX_TRACKER_CLOUD_ORG_ID="your_cloud_org_id" \
-  -- npx -y @gor-dev/yandex-tracker-mcp
+claude mcp add --scope user --transport stdio yandex-tracker -- \
+  env YANDEX_TRACKER_TOKEN="your_token" \
+      YANDEX_TRACKER_CLOUD_ORG_ID="your_cloud_org_id" \
+      npx -y @gor-dev/yandex-tracker-mcp
 ```
 
-### Global Install
+### Claude Code — Project
+
+Adds the server only for the current project:
+
+```bash
+claude mcp add --transport stdio yandex-tracker -- \
+  env YANDEX_TRACKER_TOKEN="your_token" \
+      YANDEX_TRACKER_CLOUD_ORG_ID="your_cloud_org_id" \
+      npx -y @gor-dev/yandex-tracker-mcp
+```
+
+### Global npm Install
 
 ```bash
 npm install -g @gor-dev/yandex-tracker-mcp
-```
-
-### Install Claude Skill (optional)
-
-Gives Claude workflow knowledge (sprint planning, best practices, query patterns):
-
-```bash
-npx -y @gor-dev/yandex-tracker-mcp --install-skill
 ```
 
 ### Manual (from source)
@@ -47,6 +50,20 @@ cd yandex-tracker-mcp-server
 npm install
 npm run build
 ```
+
+## Claude Skill
+
+The server includes a Claude Code skill with workflow knowledge (sprint planning, daily standups, time tracking, query patterns, best practices).
+
+**Automatic install:** The skill is installed automatically every time the MCP server starts. No extra steps needed.
+
+**Manual install (optional):**
+
+```bash
+npx -y @gor-dev/yandex-tracker-mcp --install-skill
+```
+
+The skill files are installed to `~/.claude/skills/yandex-tracker/`.
 
 ## Configuration
 
@@ -79,28 +96,11 @@ export YANDEX_TRACKER_CLOUD_ORG_ID="your_cloud_org_id"
 
 > IAM tokens expire after 12 hours. Regenerate with `yc iam create-token`.
 
-### Claude Code (CLI) Integration
+### Manage MCP Server
 
-**Using npx (recommended):**
 ```bash
-claude mcp add yandex-tracker \
-  -e YANDEX_TRACKER_TOKEN="your_token" \
-  -e YANDEX_TRACKER_CLOUD_ORG_ID="your_cloud_org_id" \
-  -- npx -y @gor-dev/yandex-tracker-mcp
-```
-
-**Using local build:**
-```bash
-claude mcp add yandex-tracker \
-  -e YANDEX_TRACKER_TOKEN="your_token" \
-  -e YANDEX_TRACKER_CLOUD_ORG_ID="your_cloud_org_id" \
-  -- node /path/to/yandex-tracker-mcp-server/dist/index.js
-```
-
-**Manage:**
-```bash
-claude mcp list              # list all servers
-claude mcp get yandex-tracker  # show config
+claude mcp list                  # list all servers
+claude mcp get yandex-tracker    # show config
 claude mcp remove yandex-tracker # remove
 ```
 
@@ -112,12 +112,12 @@ Create `.mcp.json` in your project root:
 {
   "mcpServers": {
     "yandex-tracker": {
-      "command": "npx",
-      "args": ["-y", "@gor-dev/yandex-tracker-mcp"],
-      "env": {
-        "YANDEX_TRACKER_TOKEN": "your_token",
-        "YANDEX_TRACKER_CLOUD_ORG_ID": "your_cloud_org_id"
-      }
+      "command": "env",
+      "args": [
+        "YANDEX_TRACKER_TOKEN=your_token",
+        "YANDEX_TRACKER_CLOUD_ORG_ID=your_cloud_org_id",
+        "npx", "-y", "@gor-dev/yandex-tracker-mcp"
+      ]
     }
   }
 }
