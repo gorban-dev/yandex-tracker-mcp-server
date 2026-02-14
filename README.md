@@ -14,7 +14,32 @@ MCP (Model Context Protocol) server for integrating with Yandex Tracker API. Ena
 
 ## Installation
 
-### Claude Code — Global (Recommended)
+### Claude Code Plugin (Easiest) ⭐
+
+Install as a plugin to get MCP server + skills automatically:
+
+```bash
+# Install from npm
+claude plugin add yandex-tracker -- npm install @gor-dev/yandex-tracker-mcp
+
+# Or install from local directory
+claude plugin add /path/to/yandex-tracker-mcp-server
+```
+
+Then configure credentials:
+
+```bash
+# Set environment variables
+export YANDEX_TRACKER_TOKEN="your_token"
+export YANDEX_TRACKER_CLOUD_ORG_ID="your_cloud_org_id"
+```
+
+**What you get:**
+- ✅ MCP server automatically configured
+- ✅ Skills auto-loaded (`/yandex-tracker` workflow knowledge)
+- ✅ Easy updates via `claude plugin update yandex-tracker`
+
+### Claude Code — MCP Server (Advanced)
 
 Adds the server for all your projects:
 

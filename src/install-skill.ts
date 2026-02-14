@@ -5,7 +5,7 @@ import { homedir } from "node:os";
 
 export function installSkill(silent = false): void {
   const __dirname = dirname(fileURLToPath(import.meta.url));
-  const sourceDir = join(__dirname, "..", "skill");
+  const sourceDir = join(__dirname, "..", "skills", "yandex-tracker");
   const targetDir = join(homedir(), ".claude", "skills", "yandex-tracker");
 
   mkdirSync(targetDir, { recursive: true });

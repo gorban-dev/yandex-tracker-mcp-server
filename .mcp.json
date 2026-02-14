@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "yandex-tracker": {
+      "command": "npx",
+      "args": ["-y", "@gor-dev/yandex-tracker-mcp"],
+      "env": {
+        "YANDEX_TRACKER_TOKEN": "${YANDEX_TRACKER_TOKEN}",
+        "YANDEX_TRACKER_CLOUD_ORG_ID": "${YANDEX_TRACKER_CLOUD_ORG_ID}"
+      }
+    }
+  }
+}
